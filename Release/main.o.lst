@@ -1,0 +1,1048 @@
+   1              		.file	"main.c"
+   2              		.section	.rodata.str1.1,"aMS",%progbits,1
+   3              	.LC0:
+   4 0000 69326354 		.ascii	"i2cTimer\000"
+   4      696D6572 
+   4      00
+   5              	.LC1:
+   6 0009 4474696D 		.ascii	"Dtimer\000"
+   6      657200
+   7              	.LC2:
+   8 0010 6D703300 		.ascii	"mp3\000"
+   9              	.LC3:
+  10 0014 4552524F 		.ascii	"ERROR:  OUT OF MEMORY: Check OS Stack Size or task "
+  10      523A2020 
+  10      4F555420 
+  10      4F46204D 
+  10      454D4F52 
+  11 0047 73746163 		.ascii	"stack size.\012\000"
+  11      6B207369 
+  11      7A652E0A 
+  11      00
+  12              	.LC4:
+  13 0054 0A2D2D20 		.ascii	"\012-- Starting FreeRTOS --\012\000"
+  13      53746172 
+  13      74696E67 
+  13      20467265 
+  13      6552544F 
+  14              	.LC5:
+  15 006e 4552524F 		.ascii	"ERROR: Unexpected OS Exit!\012\000"
+  15      523A2055 
+  15      6E657870 
+  15      65637465 
+  15      64204F53 
+  16              		.text
+  17              		.align	2
+  18              		.global	main
+  20              	main:
+  21              		@ args = 0, pretend = 0, frame = 32
+  22              		@ frame_needed = 0, uses_anonymous_args = 0
+  23 0000 70402DE9 		stmfd	sp!, {r4, r5, r6, lr}
+  24 0004 30D04DE2 		sub	sp, sp, #48
+  25 0008 FEFFFFEB 		bl	cpuSetupHardware
+  26 000c 24019FE5 		ldr	r0, .L6
+  27 0010 FEFFFFEB 		bl	watchdogDelayUs
+  28 0014 011CA0E3 		mov	r1, #256
+  29 0018 960CA0E3 		mov	r0, #38400
+  30 001c FEFFFFEB 		bl	uart0Init
+  31 0020 14019FE5 		ldr	r0, .L6+4
+  32 0024 FEFFFFEB 		bl	rprintf_devopen
+  33 0028 FEFFFFEB 		bl	didSystemCrash
+  34 002c 000050E3 		cmp	r0, #0
+  35 0030 0100000A 		beq	.L2
+  36 0034 FEFFFFEB 		bl	printCrashInfo
+  37 0038 FEFFFFEB 		bl	clearCrashInfo
+  38              	.L2:
+  39 003c FEFFFFEB 		bl	cpuPrintMemoryInfo
+  40 0040 F8009FE5 		ldr	r0, .L6+8
+  41 0044 FEFFFFEB 		bl	rprintf_devopen
+  42 0048 FEFFFFEB 		bl	xQueueCreateMutex
+  43 004c 0F10A0E3 		mov	r1, #15
+  44 0050 2C008DE5 		str	r0, [sp, #44]
+  45 0054 0100A0E3 		mov	r0, #1
+  46 0058 FEFFFFEB 		bl	xQueueCreate
+  47 005c 10008DE5 		str	r0, [sp, #16]
+  48 0060 0100A0E3 		mov	r0, #1
+  49 0064 0010A0E1 		mov	r1, r0
+  50 0068 FEFFFFEB 		bl	xQueueCreate
+  51 006c 10508DE2 		add	r5, sp, #16
+  52 0070 14008DE5 		str	r0, [sp, #20]
+  53 0074 0060A0E3 		mov	r6, #0
+  54 0078 01C0A0E3 		mov	ip, #1
+  55 007c 184085E2 		add	r4, r5, #24
+  56 0080 BC009FE5 		ldr	r0, .L6+12
+  57 0084 BC109FE5 		ldr	r1, .L6+16
+  58 0088 012BA0E3 		mov	r2, #1024
+  59 008c 0530A0E1 		mov	r3, r5
+  60 0090 00C08DE5 		str	ip, [sp, #0]
+  61 0094 50008DE9 		stmib	sp, {r4, r6}	@ phole stm
+  62 0098 0C608DE5 		str	r6, [sp, #12]
+  63 009c FEFFFFEB 		bl	xTaskGenericCreate
+  64 00a0 010050E3 		cmp	r0, #1
+  65 00a4 1700001A 		bne	.L3
+  66 00a8 0CE085E2 		add	lr, r5, #12
+  67 00ac 04C0A0E3 		mov	ip, #4
+  68 00b0 94009FE5 		ldr	r0, .L6+20
+  69 00b4 94109FE5 		ldr	r1, .L6+24
+  70 00b8 4020A0E3 		mov	r2, #64
+  71 00bc 0530A0E1 		mov	r3, r5
+  72 00c0 00508DE8 		stmia	sp, {ip, lr}	@ phole stm
+  73 00c4 08608DE5 		str	r6, [sp, #8]
+  74 00c8 0C608DE5 		str	r6, [sp, #12]
+  75 00cc FEFFFFEB 		bl	xTaskGenericCreate
+  76 00d0 010050E3 		cmp	r0, #1
+  77 00d4 0B00001A 		bne	.L3
+  78 00d8 10E085E2 		add	lr, r5, #16
+  79 00dc 03C0A0E3 		mov	ip, #3
+  80 00e0 0530A0E1 		mov	r3, r5
+  81 00e4 68009FE5 		ldr	r0, .L6+28
+  82 00e8 68109FE5 		ldr	r1, .L6+32
+  83 00ec 012BA0E3 		mov	r2, #1024
+  84 00f0 00508DE8 		stmia	sp, {ip, lr}	@ phole stm
+  85 00f4 0C608DE5 		str	r6, [sp, #12]
+  86 00f8 08608DE5 		str	r6, [sp, #8]
+  87 00fc FEFFFFEB 		bl	xTaskGenericCreate
+  88 0100 010050E3 		cmp	r0, #1
+  89 0104 0100000A 		beq	.L4
+  90              	.L3:
+  91 0108 4C009FE5 		ldr	r0, .L6+36
+  92 010c FEFFFFEB 		bl	rprintf
+  93              	.L4:
+  94 0110 48009FE5 		ldr	r0, .L6+40
+  95 0114 FEFFFFEB 		bl	rprintf
+  96 0118 FEFFFFEB 		bl	vTaskStartScheduler
+  97 011c 18009FE5 		ldr	r0, .L6+4
+  98 0120 FEFFFFEB 		bl	rprintf_devopen
+  99 0124 38009FE5 		ldr	r0, .L6+44
+ 100 0128 FEFFFFEB 		bl	rprintf
+ 101 012c 0000A0E3 		mov	r0, #0
+ 102 0130 30D08DE2 		add	sp, sp, #48
+ 103 0134 7080BDE8 		ldmfd	sp!, {r4, r5, r6, pc}
+ 104              	.L7:
+ 105              		.align	2
+ 106              	.L6:
+ 107 0138 80841E00 		.word	2000000
+ 108 013c 00000000 		.word	uart0PutCharPolling
+ 109 0140 00000000 		.word	uart0PutChar
+ 110 0144 00000000 		.word	i2cTimer
+ 111 0148 00000000 		.word	.LC0
+ 112 014c 00000000 		.word	diskTimer
+ 113 0150 09000000 		.word	.LC1
+ 114 0154 00000000 		.word	mp3
+ 115 0158 10000000 		.word	.LC2
+ 116 015c 14000000 		.word	.LC3
+ 117 0160 54000000 		.word	.LC4
+ 118 0164 6E000000 		.word	.LC5
+ 120              		.align	2
+ 121              		.global	initPE
+ 123              	initPE:
+ 124              		@ args = 0, pretend = 0, frame = 0
+ 125              		@ frame_needed = 0, uses_anonymous_args = 0
+ 126 0168 04E02DE5 		str	lr, [sp, #-4]!
+ 127 016c 0610A0E3 		mov	r1, #6
+ 128 0170 0020A0E3 		mov	r2, #0
+ 129 0174 4000A0E3 		mov	r0, #64
+ 130 0178 FEFFFFEB 		bl	i2cWriteDeviceRegister
+ 131 017c 0710A0E3 		mov	r1, #7
+ 132 0180 FF20A0E3 		mov	r2, #255
+ 133 0184 4000A0E3 		mov	r0, #64
+ 134 0188 FEFFFFEB 		bl	i2cWriteDeviceRegister
+ 135 018c 0210A0E3 		mov	r1, #2
+ 136 0190 FF20A0E3 		mov	r2, #255
+ 137 0194 4000A0E3 		mov	r0, #64
+ 138 0198 FEFFFFEB 		bl	i2cWriteDeviceRegister
+ 139 019c 3200A0E3 		mov	r0, #50
+ 140 01a0 FEFFFFEB 		bl	vTaskDelay
+ 141 01a4 4000A0E3 		mov	r0, #64
+ 142 01a8 0210A0E3 		mov	r1, #2
+ 143 01ac 0020A0E3 		mov	r2, #0
+ 144 01b0 04E09DE4 		ldr	lr, [sp], #4
+ 145 01b4 FEFFFFEA 		b	i2cWriteDeviceRegister
+ 147              		.section	.rodata.str1.1
+ 148              	.LC6:
+ 149 008a 4552524F 		.ascii	"ERROR!\000"
+ 149      522100
+ 150              	.LC7:
+ 151 0091 53656E74 		.ascii	"Sent Along: songArray[%d] = %s =? %s!\012\000"
+ 151      20416C6F 
+ 151      6E673A20 
+ 151      736F6E67 
+ 151      41727261 
+ 152              		.text
+ 153              		.align	2
+ 154              		.global	getSong
+ 156              	getSong:
+ 157              		@ args = 0, pretend = 0, frame = 0
+ 158              		@ frame_needed = 0, uses_anonymous_args = 0
+ 159 01b8 30402DE9 		stmfd	sp!, {r4, r5, lr}
+ 160 01bc FF4000E2 		and	r4, r0, #255
+ 161 01c0 6400A0E3 		mov	r0, #100
+ 162 01c4 0150A0E1 		mov	r5, r1
+ 163 01c8 FEFFFFEB 		bl	vTaskDelay
+ 164 01cc 530054E3 		cmp	r4, #83
+ 165 01d0 0800001A 		bne	.L11
+ 166 01d4 9C109FE5 		ldr	r1, .L24
+ 167 01d8 9C309FE5 		ldr	r3, .L24+4
+ 168 01dc 002091E5 		ldr	r2, [r1, #0]
+ 169 01e0 003093E5 		ldr	r3, [r3, #0]
+ 170 01e4 030052E1 		cmp	r2, r3
+ 171 01e8 0030A0A3 		movge	r3, #0
+ 172 01ec 013082B2 		addlt	r3, r2, #1
+ 173 01f0 003081E5 		str	r3, [r1, #0]
+ 174 01f4 0B0000EA 		b	.L23
+ 175              	.L11:
+ 176 01f8 500054E3 		cmp	r4, #80
+ 177 01fc 0700001A 		bne	.L15
+ 178 0200 70209FE5 		ldr	r2, .L24
+ 179 0204 003092E5 		ldr	r3, [r2, #0]
+ 180 0208 000053E3 		cmp	r3, #0
+ 181 020c 68309FD5 		ldrle	r3, .L24+4
+ 182 0210 003093D5 		ldrle	r3, [r3, #0]
+ 183 0214 013043C2 		subgt	r3, r3, #1
+ 184 0218 003082E5 		str	r3, [r2, #0]
+ 185 021c 010000EA 		b	.L23
+ 186              	.L15:
+ 187 0220 430054E3 		cmp	r4, #67
+ 188 0224 0700001A 		bne	.L18
+ 189              	.L23:
+ 190 0228 48309FE5 		ldr	r3, .L24
+ 191 022c 4C209FE5 		ldr	r2, .L24+8
+ 192 0230 001093E5 		ldr	r1, [r3, #0]
+ 193 0234 0F30A0E3 		mov	r3, #15
+ 194 0238 932121E0 		mla	r1, r3, r1, r2
+ 195 023c 0500A0E1 		mov	r0, r5
+ 196 0240 FEFFFFEB 		bl	strcpy
+ 197 0244 020000EA 		b	.L14
+ 198              	.L18:
+ 199 0248 34309FE5 		ldr	r3, .L24+12
+ 200 024c 000054E3 		cmp	r4, #0
+ 201 0250 0350A011 		movne	r5, r3
+ 202              	.L14:
+ 203 0254 1C309FE5 		ldr	r3, .L24
+ 204 0258 20209FE5 		ldr	r2, .L24+8
+ 205 025c 001093E5 		ldr	r1, [r3, #0]
+ 206 0260 0F30A0E3 		mov	r3, #15
+ 207 0264 932122E0 		mla	r2, r3, r1, r2
+ 208 0268 18009FE5 		ldr	r0, .L24+16
+ 209 026c 0530A0E1 		mov	r3, r5
+ 210 0270 3040BDE8 		ldmfd	sp!, {r4, r5, lr}
+ 211 0274 FEFFFFEA 		b	rprintf
+ 212              	.L25:
+ 213              		.align	2
+ 214              	.L24:
+ 215 0278 00000000 		.word	currentSong
+ 216 027c 00000000 		.word	lastFileIndex
+ 217 0280 00000000 		.word	songArray
+ 218 0284 8A000000 		.word	.LC6
+ 219 0288 91000000 		.word	.LC7
+ 221              		.section	.rodata.str1.1
+ 222              	.LC8:
+ 223 00b8 596F7520 		.ascii	"You did not create an SPI Mutex\012\000"
+ 223      64696420 
+ 223      6E6F7420 
+ 223      63726561 
+ 223      74652061 
+ 224              	.LC9:
+ 225 00d9 5741524E 		.ascii	"WARNING: SD CARD Could not be mounted!\012\000"
+ 225      494E473A 
+ 225      20534420 
+ 225      43415244 
+ 225      20436F75 
+ 226              	.LC11:
+ 227 0101 496E7661 		.ascii	"Invalid directory: |%s|\012\000"
+ 227      6C696420 
+ 227      64697265 
+ 227      63746F72 
+ 227      793A207C 
+ 228              	.LC12:
+ 229 011a 44697265 		.ascii	"Directory listing of: %s\012\012\000"
+ 229      63746F72 
+ 229      79206C69 
+ 229      7374696E 
+ 229      67206F66 
+ 230              	.LC13:
+ 231 0135 46696C65 		.ascii	"File Name found: %s.\012\000"
+ 231      204E616D 
+ 231      6520666F 
+ 231      756E643A 
+ 231      2025732E 
+ 232              	.LC14:
+ 233 014b 2E00     		.ascii	".\000"
+ 234              	.LC15:
+ 235 014d 46696C65 		.ascii	"File Extension was: %s\012\000"
+ 235      20457874 
+ 235      656E7369 
+ 235      6F6E2077 
+ 235      61733A20 
+ 236              	.LC16:
+ 237 0165 436F7079 		.ascii	"Copying File[%d]: %c\012\000"
+ 237      696E6720 
+ 237      46696C65 
+ 237      5B25645D 
+ 237      3A202563 
+ 238              	.LC17:
+ 239 017b 6A757374 		.ascii	"just populated song: %s\012\000"
+ 239      20706F70 
+ 239      756C6174 
+ 239      65642073 
+ 239      6F6E673A 
+ 240              	.LC18:
+ 241 0194 6C617374 		.ascii	"lastFileIndex = %d\012\000"
+ 241      46696C65 
+ 241      496E6465 
+ 241      78203D20 
+ 241      25640A00 
+ 242              	.LC19:
+ 243 01a8 736F6E67 		.ascii	"songArray[%d] = %s\012\000"
+ 243      41727261 
+ 243      795B2564 
+ 243      5D203D20 
+ 243      25730A00 
+ 244              	.LC20:
+ 245 01bc 45786974 		.ascii	"Exiting popSongs\012\000"
+ 245      696E6720 
+ 245      706F7053 
+ 245      6F6E6773 
+ 245      0A00
+ 246              	.LC10:
+ 247 01ce 303A00   		.ascii	"0:\000"
+ 248              		.text
+ 249              		.align	2
+ 250              		.global	popSongs
+ 252              	popSongs:
+ 253              		@ args = 0, pretend = 0, frame = 1168
+ 254              		@ frame_needed = 0, uses_anonymous_args = 0
+ 255 028c F04F2DE9 		stmfd	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 256 0290 1C3090E5 		ldr	r3, [r0, #28]
+ 257 0294 000053E3 		cmp	r3, #0
+ 258 0298 49DE4DE2 		sub	sp, sp, #1168
+ 259 029c 0090A0E1 		mov	r9, r0
+ 260 02a0 0200001A 		bne	.L27
+ 261 02a4 24029FE5 		ldr	r0, .L41
+ 262 02a8 FEFFFFEB 		bl	rprintf
+ 263              	.L28:
+ 264 02ac FEFFFFEA 		b	.L28
+ 265              	.L27:
+ 266 02b0 FEFFFFEB 		bl	initialize_SSPSPI
+ 267 02b4 18029FE5 		ldr	r0, .L41+4
+ 268 02b8 FEFFFFEB 		bl	initialize_I2C0
+ 269 02bc 1C0089E2 		add	r0, r9, #28
+ 270 02c0 FEFFFFEB 		bl	diskio_initializeSPIMutex
+ 271 02c4 FEFFFFEB 		bl	initialize_SdCardSignals
+ 272 02c8 FEFFFFEB 		bl	initialize_sta013
+ 273 02cc FEFFFFEB 		bl	initialize_pcm1774
+ 274 02d0 10108DE2 		add	r1, sp, #16
+ 275 02d4 0C1041E2 		sub	r1, r1, #12
+ 276 02d8 0000A0E3 		mov	r0, #0
+ 277 02dc FEFFFFEB 		bl	f_mount
+ 278 02e0 000050E3 		cmp	r0, #0
+ 279 02e4 EC019F15 		ldrne	r0, .L41+8
+ 280 02e8 FEFFFF1B 		blne	rprintf
+ 281              	.L29:
+ 282 02ec 124D8DE2 		add	r4, sp, #1152
+ 283 02f0 0D4084E2 		add	r4, r4, #13
+ 284 02f4 438E8DE2 		add	r8, sp, #1072
+ 285 02f8 DC119FE5 		ldr	r1, .L41+12
+ 286 02fc 0320A0E3 		mov	r2, #3
+ 287 0300 0400A0E1 		mov	r0, r4
+ 288 0304 088088E2 		add	r8, r8, #8
+ 289 0308 FEFFFFEB 		bl	memcpy
+ 290 030c 0800A0E1 		mov	r0, r8
+ 291 0310 0410A0E1 		mov	r1, r4
+ 292 0314 FEFFFFEB 		bl	f_opendir
+ 293 0318 005050E2 		subs	r5, r0, #0
+ 294 031c 0300000A 		beq	.L30
+ 295 0320 0410A0E1 		mov	r1, r4
+ 296 0324 B4019FE5 		ldr	r0, .L41+16
+ 297 0328 FEFFFFEB 		bl	rprintf
+ 298 032c 650000EA 		b	.L40
+ 299              	.L30:
+ 300 0330 0410A0E1 		mov	r1, r4
+ 301 0334 A8019FE5 		ldr	r0, .L41+20
+ 302 0338 FEFFFFEB 		bl	rprintf
+ 303 033c 452E8DE2 		add	r2, sp, #1104
+ 304 0340 0C2082E2 		add	r2, r2, #12
+ 305 0344 9C719FE5 		ldr	r7, .L41+24
+ 306 0348 092082E2 		add	r2, r2, #9
+ 307 034c 47BE8DE2 		add	fp, sp, #1136
+ 308 0350 00208DE5 		str	r2, [sp, #0]
+ 309 0354 0560A0E1 		mov	r6, r5
+ 310 0358 07A0A0E1 		mov	sl, r7
+ 311 035c 0EB08BE2 		add	fp, fp, #14
+ 312              	.L38:
+ 313 0360 8E3F8DE2 		add	r3, sp, #568
+ 314 0364 430E8DE2 		add	r0, sp, #1072
+ 315 0368 451E8DE2 		add	r1, sp, #1104
+ 316 036c 74348DE5 		str	r3, [sp, #1140]
+ 317 0370 080080E2 		add	r0, r0, #8
+ 318 0374 023CA0E3 		mov	r3, #512
+ 319 0378 0C1081E2 		add	r1, r1, #12
+ 320 037c 78348DE5 		str	r3, [sp, #1144]
+ 321 0380 FEFFFFEB 		bl	f_readdir
+ 322 0384 FF4010E2 		ands	r4, r0, #255
+ 323 0388 3600001A 		bne	.L32
+ 324 038c 6534DDE5 		ldrb	r3, [sp, #1125]	@ zero_extendqisi2
+ 325 0390 000053E3 		cmp	r3, #0
+ 326 0394 3300000A 		beq	.L32
+ 327 0398 00109DE5 		ldr	r1, [sp, #0]
+ 328 039c 0B00A0E1 		mov	r0, fp
+ 329 03a0 FEFFFFEB 		bl	strcpy
+ 330 03a4 0B10A0E1 		mov	r1, fp
+ 331 03a8 3C019FE5 		ldr	r0, .L41+28
+ 332 03ac FEFFFFEB 		bl	rprintf
+ 333 03b0 38119FE5 		ldr	r1, .L41+32
+ 334 03b4 0B00A0E1 		mov	r0, fp
+ 335 03b8 FEFFFFEB 		bl	strtok
+ 336 03bc 0410A0E1 		mov	r1, r4
+ 337 03c0 0080A0E1 		mov	r8, r0
+ 338 03c4 0400A0E1 		mov	r0, r4
+ 339 03c8 FEFFFFEB 		bl	strtok
+ 340 03cc 14519FE5 		ldr	r5, .L41+24
+ 341 03d0 0010A0E1 		mov	r1, r0
+ 342 03d4 18019FE5 		ldr	r0, .L41+36
+ 343 03d8 FEFFFFEB 		bl	rprintf
+ 344 03dc 0F30A0E3 		mov	r3, #15
+ 345 03e0 935625E0 		mla	r5, r3, r6, r5
+ 346 03e4 030000EA 		b	.L33
+ 347              	.L34:
+ 348 03e8 FEFFFFEB 		bl	rprintf
+ 349 03ec 0430D8E7 		ldrb	r3, [r8, r4]	@ zero_extendqisi2
+ 350 03f0 013045E5 		strb	r3, [r5, #-1]
+ 351 03f4 014084E2 		add	r4, r4, #1
+ 352              	.L33:
+ 353 03f8 04C0D8E7 		ldrb	ip, [r8, r4]	@ zero_extendqisi2
+ 354 03fc 00205CE2 		subs	r2, ip, #0
+ 355 0400 0410A0E1 		mov	r1, r4
+ 356 0404 EC009FE5 		ldr	r0, .L41+40
+ 357 0408 015085E2 		add	r5, r5, #1
+ 358 040c F5FFFF1A 		bne	.L34
+ 359 0410 D0209FE5 		ldr	r2, .L41+24
+ 360 0414 0F30A0E3 		mov	r3, #15
+ 361 0418 962323E0 		mla	r3, r6, r3, r2
+ 362 041c 043083E0 		add	r3, r3, r4
+ 363 0420 01C0C3E5 		strb	ip, [r3, #1]
+ 364 0424 D0009FE5 		ldr	r0, .L41+44
+ 365 0428 0A10A0E1 		mov	r1, sl
+ 366 042c FEFFFFEB 		bl	rprintf
+ 367 0430 C8209FE5 		ldr	r2, .L41+48
+ 368 0434 003092E5 		ldr	r3, [r2, #0]
+ 369 0438 00209DE5 		ldr	r2, [sp, #0]
+ 370 043c 020053E1 		cmp	r3, r2
+ 371 0440 BC309F05 		ldreq	r3, .L41+52
+ 372 0444 BC209FE5 		ldr	r2, .L41+56
+ 373 0448 00608305 		streq	r6, [r3, #0]
+ 374 044c 0610A0E1 		mov	r1, r6
+ 375 0450 014086E2 		add	r4, r6, #1
+ 376 0454 B0009FE5 		ldr	r0, .L41+60
+ 377 0458 006082E5 		str	r6, [r2, #0]
+ 378 045c FEFFFFEB 		bl	rprintf
+ 379 0460 1E0054E3 		cmp	r4, #30
+ 380 0464 0200001A 		bne	.L36
+ 381              	.L32:
+ 382 0468 0040A0E3 		mov	r4, #0
+ 383 046c 94509FE5 		ldr	r5, .L41+56
+ 384 0470 050000EA 		b	.L37
+ 385              	.L36:
+ 386 0474 630054E3 		cmp	r4, #99
+ 387 0478 0FA08AE2 		add	sl, sl, #15
+ 388 047c F9FFFFCA 		bgt	.L32
+ 389 0480 0460A0E1 		mov	r6, r4
+ 390 0484 B5FFFFEA 		b	.L38
+ 391              	.L39:
+ 392 0488 FEFFFFEB 		bl	rprintf
+ 393              	.L37:
+ 394 048c 003095E5 		ldr	r3, [r5, #0]
+ 395 0490 030054E1 		cmp	r4, r3
+ 396 0494 0410A0E1 		mov	r1, r4
+ 397 0498 0720A0E1 		mov	r2, r7
+ 398 049c 6C009FE5 		ldr	r0, .L41+64
+ 399 04a0 0F7087E2 		add	r7, r7, #15
+ 400 04a4 014084E2 		add	r4, r4, #1
+ 401 04a8 F6FFFFDA 		ble	.L39
+ 402 04ac 0010A0E3 		mov	r1, #0
+ 403 04b0 1C0099E5 		ldr	r0, [r9, #28]
+ 404 04b4 0120A0E1 		mov	r2, r1
+ 405 04b8 0130A0E1 		mov	r3, r1
+ 406 04bc FEFFFFEB 		bl	xQueueGenericSend
+ 407 04c0 4C009FE5 		ldr	r0, .L41+68
+ 408 04c4 FEFFFFEB 		bl	rprintf
+ 409              	.L40:
+ 410 04c8 49DE8DE2 		add	sp, sp, #1168
+ 411 04cc F08FBDE8 		ldmfd	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+ 412              	.L42:
+ 413              		.align	2
+ 414              	.L41:
+ 415 04d0 B8000000 		.word	.LC8
+ 416 04d4 A0860100 		.word	100000
+ 417 04d8 D9000000 		.word	.LC9
+ 418 04dc CE010000 		.word	.LC10
+ 419 04e0 01010000 		.word	.LC11
+ 420 04e4 1A010000 		.word	.LC12
+ 421 04e8 00000000 		.word	songArray
+ 422 04ec 35010000 		.word	.LC13
+ 423 04f0 4B010000 		.word	.LC14
+ 424 04f4 4D010000 		.word	.LC15
+ 425 04f8 65010000 		.word	.LC16
+ 426 04fc 7B010000 		.word	.LC17
+ 427 0500 00000000 		.word	nowPlaying
+ 428 0504 00000000 		.word	currentSong
+ 429 0508 00000000 		.word	lastFileIndex
+ 430 050c 94010000 		.word	.LC18
+ 431 0510 A8010000 		.word	.LC19
+ 432 0514 BC010000 		.word	.LC20
+ 434              		.section	.rodata.str1.1
+ 435              	.LC21:
+ 436 01d1 566F6C75 		.ascii	"Volume Down\012\000"
+ 436      6D652044 
+ 436      6F776E0A 
+ 436      00
+ 437              	.LC22:
+ 438 01de 566F6C75 		.ascii	"Volume Up\012\000"
+ 438      6D652055 
+ 438      700A00
+ 439              	.LC23:
+ 440 01e9 53656E74 		.ascii	"Sent Skip!\012\000"
+ 440      20536B69 
+ 440      70210A00 
+ 441              	.LC24:
+ 442 01f5 54696D65 		.ascii	"Timeout during Send!!!\012\000"
+ 442      6F757420 
+ 442      64757269 
+ 442      6E672053 
+ 442      656E6421 
+ 443              	.LC25:
+ 444 020d 53656E74 		.ascii	"Sent next song name: %s!\012\000"
+ 444      206E6578 
+ 444      7420736F 
+ 444      6E67206E 
+ 444      616D653A 
+ 445              	.LC26:
+ 446 0227 50617573 		.ascii	"Pause Button\012\000"
+ 446      65204275 
+ 446      74746F6E 
+ 446      0A00
+ 447              	.LC27:
+ 448 0235 53656E74 		.ascii	"Sent Play!\012\000"
+ 448      20506C61 
+ 448      79210A00 
+ 449              	.LC28:
+ 450 0241 53656E74 		.ascii	"Sent current song name: %s!\012\000"
+ 450      20637572 
+ 450      72656E74 
+ 450      20736F6E 
+ 450      67206E61 
+ 451              	.LC29:
+ 452 025e 53656E74 		.ascii	"Sent Previous!\012\000"
+ 452      20507265 
+ 452      76696F75 
+ 452      73210A00 
+ 453              	.LC30:
+ 454 026e 53656E74 		.ascii	"Sent Previous song name: %s!\012\000"
+ 454      20507265 
+ 454      76696F75 
+ 454      7320736F 
+ 454      6E67206E 
+ 455              	.LC31:
+ 456 028c 4F6E6520 		.ascii	"One button at a time, please...\012\000"
+ 456      62757474 
+ 456      6F6E2061 
+ 456      74206120 
+ 456      74696D65 
+ 457              		.text
+ 458              		.align	2
+ 459              		.global	i2cTimer
+ 461              	i2cTimer:
+ 462              		@ args = 0, pretend = 0, frame = 16
+ 463              		@ frame_needed = 0, uses_anonymous_args = 0
+ 464 0518 F04F2DE9 		stmfd	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 465 051c 10D04DE2 		sub	sp, sp, #16
+ 466 0520 8C529FE5 		ldr	r5, .L77
+ 467 0524 0060A0E1 		mov	r6, r0
+ 468 0528 FEFFFFEB 		bl	popSongs
+ 469 052c 84329FE5 		ldr	r3, .L77+4
+ 470 0530 3220A0E3 		mov	r2, #50
+ 471 0534 0040A0E3 		mov	r4, #0
+ 472 0538 004083E5 		str	r4, [r3, #0]
+ 473 053c 002085E5 		str	r2, [r5, #0]
+ 474 0540 0200A0E1 		mov	r0, r2
+ 475 0544 FEFFFFEB 		bl	vTaskDelay
+ 476 0548 6C329FE5 		ldr	r3, .L77+8
+ 477 054c 6CA29FE5 		ldr	sl, .L77+12
+ 478 0550 0040C3E5 		strb	r4, [r3, #0]
+ 479 0554 0580A0E1 		mov	r8, r5
+ 480 0558 0490A0E1 		mov	r9, r4
+ 481 055c 0370A0E1 		mov	r7, r3
+ 482 0560 01508DE2 		add	r5, sp, #1
+ 483 0564 50B0A0E3 		mov	fp, #80
+ 484              	.L68:
+ 485 0568 C800A0E3 		mov	r0, #200
+ 486 056c FEFFFFEB 		bl	vTaskDelay
+ 487 0570 0110A0E3 		mov	r1, #1
+ 488 0574 4000A0E3 		mov	r0, #64
+ 489 0578 FEFFFFEB 		bl	i2cReadDeviceRegister
+ 490 057c 0040A0E1 		mov	r4, r0
+ 491 0580 0210A0E3 		mov	r1, #2
+ 492 0584 4000A0E3 		mov	r0, #64
+ 493 0588 0420A0E1 		mov	r2, r4
+ 494 058c FEFFFFEB 		bl	i2cWriteDeviceRegister
+ 495 0590 000054E3 		cmp	r4, #0
+ 496 0594 F3FFFF0A 		beq	.L68
+ 497 0598 080054E3 		cmp	r4, #8
+ 498 059c F1FFFF0A 		beq	.L68
+ 499 05a0 0600008A 		bhi	.L52
+ 500 05a4 020054E3 		cmp	r4, #2
+ 501 05a8 1900000A 		beq	.L47
+ 502 05ac 040054E3 		cmp	r4, #4
+ 503 05b0 ECFFFF0A 		beq	.L68
+ 504 05b4 010054E3 		cmp	r4, #1
+ 505 05b8 7A00001A 		bne	.L45
+ 506 05bc 0A0000EA 		b	.L74
+ 507              	.L52:
+ 508 05c0 200054E3 		cmp	r4, #32
+ 509 05c4 3500000A 		beq	.L49
+ 510 05c8 0200008A 		bhi	.L53
+ 511 05cc 100054E3 		cmp	r4, #16
+ 512 05d0 7400001A 		bne	.L45
+ 513 05d4 180000EA 		b	.L75
+ 514              	.L53:
+ 515 05d8 400054E3 		cmp	r4, #64
+ 516 05dc 3B00000A 		beq	.L50
+ 517 05e0 800054E3 		cmp	r4, #128
+ 518 05e4 6F00001A 		bne	.L45
+ 519 05e8 520000EA 		b	.L76
+ 520              	.L74:
+ 521 05ec 003098E5 		ldr	r3, [r8, #0]
+ 522 05f0 000053E3 		cmp	r3, #0
+ 523 05f4 DBFFFFDA 		ble	.L68
+ 524 05f8 013043E2 		sub	r3, r3, #1
+ 525 05fc 0300A0E1 		mov	r0, r3
+ 526 0600 0310A0E1 		mov	r1, r3
+ 527 0604 003088E5 		str	r3, [r8, #0]
+ 528 0608 FEFFFFEB 		bl	pcm1774_OutputVolume
+ 529 060c B0019FE5 		ldr	r0, .L77+16
+ 530 0610 650000EA 		b	.L69
+ 531              	.L47:
+ 532 0614 003098E5 		ldr	r3, [r8, #0]
+ 533 0618 630053E3 		cmp	r3, #99
+ 534 061c D1FFFFCA 		bgt	.L68
+ 535 0620 013083E2 		add	r3, r3, #1
+ 536 0624 0300A0E1 		mov	r0, r3
+ 537 0628 0310A0E1 		mov	r1, r3
+ 538 062c 003088E5 		str	r3, [r8, #0]
+ 539 0630 FEFFFFEB 		bl	pcm1774_OutputVolume
+ 540 0634 8C019FE5 		ldr	r0, .L77+20
+ 541 0638 5B0000EA 		b	.L69
+ 542              	.L75:
+ 543 063c 5330A0E3 		mov	r3, #83
+ 544 0640 0030C7E5 		strb	r3, [r7, #0]
+ 545 0644 6420A0E3 		mov	r2, #100
+ 546 0648 0030A0E3 		mov	r3, #0
+ 547 064c 68119FE5 		ldr	r1, .L77+8
+ 548 0650 040096E5 		ldr	r0, [r6, #4]
+ 549 0654 FEFFFFEB 		bl	xQueueGenericSend
+ 550 0658 000050E3 		cmp	r0, #0
+ 551 065c 68019F15 		ldrne	r0, .L77+24
+ 552 0660 68019F05 		ldreq	r0, .L77+28
+ 553 0664 FEFFFFEB 		bl	rprintf
+ 554 0668 3200A0E3 		mov	r0, #50
+ 555 066c FEFFFFEB 		bl	vTaskDelay
+ 556 0670 0000D7E5 		ldrb	r0, [r7, #0]	@ zero_extendqisi2
+ 557 0674 0510A0E1 		mov	r1, r5
+ 558 0678 FEFFFFEB 		bl	getSong
+ 559 067c 000096E5 		ldr	r0, [r6, #0]
+ 560 0680 0510A0E1 		mov	r1, r5
+ 561 0684 6420A0E3 		mov	r2, #100
+ 562 0688 0030A0E3 		mov	r3, #0
+ 563 068c FEFFFFEB 		bl	xQueueGenericSend
+ 564 0690 000050E3 		cmp	r0, #0
+ 565 0694 38019F15 		ldrne	r0, .L77+32
+ 566 0698 3D00001A 		bne	.L70
+ 567 069c 3F0000EA 		b	.L64
+ 568              	.L49:
+ 569 06a0 00309AE5 		ldr	r3, [sl, #0]
+ 570 06a4 010053E3 		cmp	r3, #1
+ 571 06a8 0200001A 		bne	.L57
+ 572 06ac 00908AE5 		str	r9, [sl, #0]
+ 573 06b0 FEFFFFEB 		bl	sta013ResumeDecoder
+ 574 06b4 030000EA 		b	.L58
+ 575              	.L57:
+ 576 06b8 000053E3 		cmp	r3, #0
+ 577 06bc 01308302 		addeq	r3, r3, #1
+ 578 06c0 00308A05 		streq	r3, [sl, #0]
+ 579 06c4 FEFFFF0B 		bleq	sta013PauseDecoder
+ 580              	.L58:
+ 581 06c8 08019FE5 		ldr	r0, .L77+36
+ 582 06cc 360000EA 		b	.L69
+ 583              	.L50:
+ 584 06d0 4330A0E3 		mov	r3, #67
+ 585 06d4 0030C7E5 		strb	r3, [r7, #0]
+ 586 06d8 6420A0E3 		mov	r2, #100
+ 587 06dc 0030A0E3 		mov	r3, #0
+ 588 06e0 D4109FE5 		ldr	r1, .L77+8
+ 589 06e4 040096E5 		ldr	r0, [r6, #4]
+ 590 06e8 FEFFFFEB 		bl	xQueueGenericSend
+ 591 06ec 000050E3 		cmp	r0, #0
+ 592 06f0 E4009F15 		ldrne	r0, .L77+40
+ 593 06f4 D4009F05 		ldreq	r0, .L77+28
+ 594 06f8 FEFFFFEB 		bl	rprintf
+ 595 06fc 3200A0E3 		mov	r0, #50
+ 596 0700 FEFFFFEB 		bl	vTaskDelay
+ 597 0704 0000D7E5 		ldrb	r0, [r7, #0]	@ zero_extendqisi2
+ 598 0708 0510A0E1 		mov	r1, r5
+ 599 070c FEFFFFEB 		bl	getSong
+ 600 0710 0090C7E5 		strb	r9, [r7, #0]
+ 601 0714 0510A0E1 		mov	r1, r5
+ 602 0718 000096E5 		ldr	r0, [r6, #0]
+ 603 071c 6420A0E3 		mov	r2, #100
+ 604 0720 0030A0E3 		mov	r3, #0
+ 605 0724 FEFFFFEB 		bl	xQueueGenericSend
+ 606 0728 000050E3 		cmp	r0, #0
+ 607 072c AC009F15 		ldrne	r0, .L77+44
+ 608 0730 1700001A 		bne	.L70
+ 609 0734 190000EA 		b	.L64
+ 610              	.L76:
+ 611 0738 00B0C7E5 		strb	fp, [r7, #0]
+ 612 073c 6420A0E3 		mov	r2, #100
+ 613 0740 0030A0E3 		mov	r3, #0
+ 614 0744 70109FE5 		ldr	r1, .L77+8
+ 615 0748 040096E5 		ldr	r0, [r6, #4]
+ 616 074c FEFFFFEB 		bl	xQueueGenericSend
+ 617 0750 000050E3 		cmp	r0, #0
+ 618 0754 88009F15 		ldrne	r0, .L77+48
+ 619 0758 70009F05 		ldreq	r0, .L77+28
+ 620 075c FEFFFFEB 		bl	rprintf
+ 621 0760 3200A0E3 		mov	r0, #50
+ 622 0764 FEFFFFEB 		bl	vTaskDelay
+ 623 0768 0000D7E5 		ldrb	r0, [r7, #0]	@ zero_extendqisi2
+ 624 076c 0510A0E1 		mov	r1, r5
+ 625 0770 FEFFFFEB 		bl	getSong
+ 626 0774 000096E5 		ldr	r0, [r6, #0]
+ 627 0778 0510A0E1 		mov	r1, r5
+ 628 077c 6420A0E3 		mov	r2, #100
+ 629 0780 0030A0E3 		mov	r3, #0
+ 630 0784 FEFFFFEB 		bl	xQueueGenericSend
+ 631 0788 000050E3 		cmp	r0, #0
+ 632 078c 0300000A 		beq	.L64
+ 633 0790 50009FE5 		ldr	r0, .L77+52
+ 634              	.L70:
+ 635 0794 0510A0E1 		mov	r1, r5
+ 636 0798 FEFFFFEB 		bl	rprintf
+ 637 079c 71FFFFEA 		b	.L68
+ 638              	.L64:
+ 639 07a0 28009FE5 		ldr	r0, .L77+28
+ 640 07a4 000000EA 		b	.L69
+ 641              	.L45:
+ 642 07a8 3C009FE5 		ldr	r0, .L77+56
+ 643              	.L69:
+ 644 07ac FEFFFFEB 		bl	rprintf
+ 645 07b0 6CFFFFEA 		b	.L68
+ 646              	.L78:
+ 647              		.align	2
+ 648              	.L77:
+ 649 07b4 00000000 		.word	outputVol
+ 650 07b8 00000000 		.word	currentSong
+ 651 07bc 00000000 		.word	command
+ 652 07c0 00000000 		.word	paused
+ 653 07c4 D1010000 		.word	.LC21
+ 654 07c8 DE010000 		.word	.LC22
+ 655 07cc E9010000 		.word	.LC23
+ 656 07d0 F5010000 		.word	.LC24
+ 657 07d4 0D020000 		.word	.LC25
+ 658 07d8 27020000 		.word	.LC26
+ 659 07dc 35020000 		.word	.LC27
+ 660 07e0 41020000 		.word	.LC28
+ 661 07e4 5E020000 		.word	.LC29
+ 662 07e8 6E020000 		.word	.LC30
+ 663 07ec 8C020000 		.word	.LC31
+ 665              		.section	.rodata.str1.1
+ 666              	.LC32:
+ 667 02ad 25630A00 		.ascii	"%c\012\000"
+ 668              	.LC33:
+ 669 02b1 25630A0A 		.ascii	"%c\012\012\000"
+ 669      00
+ 670              	.LC34:
+ 671 02b6 536F6E67 		.ascii	"Song to play: %s\012\000"
+ 671      20746F20 
+ 671      706C6179 
+ 671      3A202573 
+ 671      0A00
+ 672              	.LC35:
+ 673 02c8 2E6D7033 		.ascii	".mp3\000"
+ 673      00
+ 674              	.LC36:
+ 675 02cd 52656365 		.ascii	"Received: %s\000"
+ 675      69766564 
+ 675      3A202573 
+ 675      00
+ 676              	.LC37:
+ 677 02da 46696C65 		.ascii	"File opened, about to play:\012\000"
+ 677      206F7065 
+ 677      6E65642C 
+ 677      2061626F 
+ 677      75742074 
+ 678              	.LC38:
+ 679 02f7 53656D61 		.ascii	"Semaphore given back--interrupted with a command.\012"
+ 679      70686F72 
+ 679      65206769 
+ 679      76656E20 
+ 679      6261636B 
+ 680 0329 00       		.ascii	"\000"
+ 681              	.LC39:
+ 682 032a 4572726F 		.ascii	"Error taking SPI semaphore while playing mp3\012\000"
+ 682      72207461 
+ 682      6B696E67 
+ 682      20535049 
+ 682      2073656D 
+ 683              	.LC40:
+ 684 0358 436F756C 		.ascii	"Couldn't open file!\012\000"
+ 684      646E2774 
+ 684      206F7065 
+ 684      6E206669 
+ 684      6C65210A 
+ 685              		.text
+ 686              		.align	2
+ 687              		.global	mp3
+ 689              	mp3:
+ 690              		@ args = 0, pretend = 0, frame = 2616
+ 691              		@ frame_needed = 0, uses_anonymous_args = 0
+ 692 07f0 F04F2DE9 		stmfd	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 693 07f4 F0319FE5 		ldr	r3, .L100
+ 694 07f8 0020A0E3 		mov	r2, #0
+ 695 07fc A3DE4DE2 		sub	sp, sp, #2608
+ 696 0800 002083E5 		str	r2, [r3, #0]
+ 697 0804 E4819FE5 		ldr	r8, .L100+4
+ 698 0808 08D04DE2 		sub	sp, sp, #8
+ 699 080c 0070A0E1 		mov	r7, r0
+ 700 0810 02A2A0E3 		mov	sl, #536870912
+ 701              	.L96:
+ 702 0814 A24E8DE2 		add	r4, sp, #2592
+ 703 0818 054084E2 		add	r4, r4, #5
+ 704 081c 000097E5 		ldr	r0, [r7, #0]
+ 705 0820 0410A0E1 		mov	r1, r4
+ 706 0824 0020E0E3 		mvn	r2, #0
+ 707 0828 0030A0E3 		mov	r3, #0
+ 708 082c FEFFFFEB 		bl	xQueueGenericReceive
+ 709 0830 000050E3 		cmp	r0, #0
+ 710 0834 F6FFFF0A 		beq	.L96
+ 711 0838 B4319FE5 		ldr	r3, .L100+8
+ 712 083c B4019FE5 		ldr	r0, .L100+12
+ 713 0840 004083E5 		str	r4, [r3, #0]
+ 714 0844 251ADDE5 		ldrb	r1, [sp, #2597]	@ zero_extendqisi2
+ 715 0848 FEFFFFEB 		bl	rprintf
+ 716 084c A4019FE5 		ldr	r0, .L100+12
+ 717 0850 261ADDE5 		ldrb	r1, [sp, #2598]	@ zero_extendqisi2
+ 718 0854 FEFFFFEB 		bl	rprintf
+ 719 0858 98019FE5 		ldr	r0, .L100+12
+ 720 085c 271ADDE5 		ldrb	r1, [sp, #2599]	@ zero_extendqisi2
+ 721 0860 FEFFFFEB 		bl	rprintf
+ 722 0864 8C019FE5 		ldr	r0, .L100+12
+ 723 0868 281ADDE5 		ldrb	r1, [sp, #2600]	@ zero_extendqisi2
+ 724 086c FEFFFFEB 		bl	rprintf
+ 725 0870 80019FE5 		ldr	r0, .L100+12
+ 726 0874 291ADDE5 		ldrb	r1, [sp, #2601]	@ zero_extendqisi2
+ 727 0878 FEFFFFEB 		bl	rprintf
+ 728 087c 78019FE5 		ldr	r0, .L100+16
+ 729 0880 2A1ADDE5 		ldrb	r1, [sp, #2602]	@ zero_extendqisi2
+ 730 0884 FEFFFFEB 		bl	rprintf
+ 731 0888 0410A0E1 		mov	r1, r4
+ 732 088c 6C019FE5 		ldr	r0, .L100+20
+ 733 0890 FEFFFFEB 		bl	rprintf
+ 734 0894 68119FE5 		ldr	r1, .L100+24
+ 735 0898 0400A0E1 		mov	r0, r4
+ 736 089c FEFFFFEB 		bl	strcat
+ 737 08a0 60019FE5 		ldr	r0, .L100+28
+ 738 08a4 0410A0E1 		mov	r1, r4
+ 739 08a8 FEFFFFEB 		bl	rprintf
+ 740 08ac 0410A0E1 		mov	r1, r4
+ 741 08b0 020B8DE2 		add	r0, sp, #2048
+ 742 08b4 0120A0E3 		mov	r2, #1
+ 743 08b8 FEFFFFEB 		bl	f_open
+ 744 08bc 000050E3 		cmp	r0, #0
+ 745 08c0 4600001A 		bne	.L81
+ 746 08c4 40019FE5 		ldr	r0, .L100+32
+ 747 08c8 FEFFFFEB 		bl	rprintf
+ 748 08cc A3BE8DE2 		add	fp, sp, #2608
+ 749 08d0 023BA0E3 		mov	r3, #2048
+ 750 08d4 343A8DE5 		str	r3, [sp, #2612]
+ 751 08d8 04B08BE2 		add	fp, fp, #4
+ 752 08dc 380000EA 		b	.L97
+ 753              	.L88:
+ 754 08e0 0500A0E1 		mov	r0, r5
+ 755 08e4 0D10A0E1 		mov	r1, sp
+ 756 08e8 0B30A0E1 		mov	r3, fp
+ 757 08ec FEFFFFEB 		bl	f_read
+ 758 08f0 004050E2 		subs	r4, r0, #0
+ 759 08f4 3200001A 		bne	.L97
+ 760 08f8 1C0097E5 		ldr	r0, [r7, #28]
+ 761 08fc 0410A0E1 		mov	r1, r4
+ 762 0900 FA2FA0E3 		mov	r2, #1000
+ 763 0904 0430A0E1 		mov	r3, r4
+ 764 0908 FEFFFFEB 		bl	xQueueGenericReceive
+ 765 090c 000050E3 		cmp	r0, #0
+ 766 0910 0590A011 		movne	r9, r5
+ 767 0914 14A08815 		strne	sl, [r8, #20]
+ 768 0918 0450A011 		movne	r5, r4
+ 769 091c 1800001A 		bne	.L98
+ 770 0920 250000EA 		b	.L99
+ 771              	.L87:
+ 772 0924 003098E5 		ldr	r3, [r8, #0]
+ 773 0928 020913E3 		tst	r3, #32768
+ 774 092c 0300000A 		beq	.L85
+ 775 0930 380A52E5 		ldrb	r0, [r2, #-2616]	@ zero_extendqisi2
+ 776 0934 014084E2 		add	r4, r4, #1
+ 777 0938 FEFFFFEB 		bl	rxTxByteSSPSPI
+ 778 093c 000000EA 		b	.L86
+ 779              	.L85:
+ 780 0940 FEFFFFEB 		bl	vTaskDelay
+ 781              	.L86:
+ 782 0944 C4209FE5 		ldr	r2, .L100+36
+ 783 0948 0030D2E5 		ldrb	r3, [r2, #0]	@ zero_extendqisi2
+ 784 094c 000053E3 		cmp	r3, #0
+ 785 0950 0B00000A 		beq	.L98
+ 786 0954 0010A0E3 		mov	r1, #0
+ 787 0958 0130A0E1 		mov	r3, r1
+ 788 095c 0120A0E1 		mov	r2, r1
+ 789 0960 1C0097E5 		ldr	r0, [r7, #28]
+ 790 0964 1CA088E5 		str	sl, [r8, #28]
+ 791 0968 FEFFFFEB 		bl	xQueueGenericSend
+ 792 096c A0009FE5 		ldr	r0, .L100+40
+ 793 0970 FEFFFFEB 		bl	rprintf
+ 794 0974 0900A0E1 		mov	r0, r9
+ 795 0978 FEFFFFEB 		bl	f_close
+ 796 097c 8C309FE5 		ldr	r3, .L100+36
+ 797 0980 0050C3E5 		strb	r5, [r3, #0]
+ 798              	.L98:
+ 799 0984 A33E8DE2 		add	r3, sp, #2608
+ 800 0988 083083E2 		add	r3, r3, #8
+ 801 098c 042083E0 		add	r2, r3, r4
+ 802 0990 343A9DE5 		ldr	r3, [sp, #2612]
+ 803 0994 030054E1 		cmp	r4, r3
+ 804 0998 0100A0E3 		mov	r0, #1
+ 805 099c E0FFFFBA 		blt	.L87
+ 806 09a0 0010A0E3 		mov	r1, #0
+ 807 09a4 1C0097E5 		ldr	r0, [r7, #28]
+ 808 09a8 0120A0E1 		mov	r2, r1
+ 809 09ac 0130A0E1 		mov	r3, r1
+ 810 09b0 1CA088E5 		str	sl, [r8, #28]
+ 811 09b4 FEFFFFEB 		bl	xQueueGenericSend
+ 812 09b8 010000EA 		b	.L97
+ 813              	.L99:
+ 814 09bc 54009FE5 		ldr	r0, .L100+44
+ 815 09c0 FEFFFFEB 		bl	rprintf
+ 816              	.L97:
+ 817 09c4 342A9DE5 		ldr	r2, [sp, #2612]
+ 818 09c8 020B52E3 		cmp	r2, #2048
+ 819 09cc 025B8DE2 		add	r5, sp, #2048
+ 820 09d0 C2FFFF0A 		beq	.L88
+ 821 09d4 0500A0E1 		mov	r0, r5
+ 822 09d8 FEFFFFEB 		bl	f_close
+ 823 09dc 8CFFFFEA 		b	.L96
+ 824              	.L81:
+ 825 09e0 34009FE5 		ldr	r0, .L100+48
+ 826 09e4 FEFFFFEB 		bl	rprintf
+ 827 09e8 89FFFFEA 		b	.L96
+ 828              	.L101:
+ 829              		.align	2
+ 830              	.L100:
+ 831 09ec 00000000 		.word	paused
+ 832 09f0 008002E0 		.word	-536707072
+ 833 09f4 00000000 		.word	nowPlaying
+ 834 09f8 AD020000 		.word	.LC32
+ 835 09fc B1020000 		.word	.LC33
+ 836 0a00 B6020000 		.word	.LC34
+ 837 0a04 C8020000 		.word	.LC35
+ 838 0a08 CD020000 		.word	.LC36
+ 839 0a0c DA020000 		.word	.LC37
+ 840 0a10 00000000 		.word	command
+ 841 0a14 F7020000 		.word	.LC38
+ 842 0a18 2A030000 		.word	.LC39
+ 843 0a1c 58030000 		.word	.LC40
+ 845              		.align	2
+ 846              		.global	diskTimer
+ 848              	diskTimer:
+ 849              		@ args = 0, pretend = 0, frame = 0
+ 850              		@ frame_needed = 0, uses_anonymous_args = 0
+ 851 0a20 04E02DE5 		str	lr, [sp, #-4]!
+ 852              	.L103:
+ 853 0a24 0A00A0E3 		mov	r0, #10
+ 854 0a28 FEFFFFEB 		bl	vTaskDelay
+ 855 0a2c FEFFFFEB 		bl	disk_timerproc
+ 856 0a30 FBFFFFEA 		b	.L103
+ 858              		.comm	lastFileIndex,4,4
+ 859              		.comm	currentSong,4,4
+ 860              		.comm	songArray,450,1
+ 861              		.comm	nowPlaying,4,4
+ 862              		.comm	paused,4,4
+ 863              		.comm	command,1,1
+ 864              		.comm	outputVol,4,4
+ 865              		.ident	"GCC: (GNU) 4.3.2"
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc1E3djh.s:20     .text:00000000 main
+/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc1E3djh.s:23     .text:00000000 $a
+/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc1E3djh.s:107    .text:00000138 $d
+/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc1E3djh.s:461    .text:00000518 i2cTimer
+/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc1E3djh.s:848    .text:00000a20 diskTimer
+/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc1E3djh.s:689    .text:000007f0 mp3
+/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc1E3djh.s:123    .text:00000168 initPE
+/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc1E3djh.s:126    .text:00000168 $a
+/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc1E3djh.s:156    .text:000001b8 getSong
+/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc1E3djh.s:215    .text:00000278 $d
+                            *COM*:00000004 currentSong
+                            *COM*:00000004 lastFileIndex
+                            *COM*:000001c2 songArray
+/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc1E3djh.s:252    .text:0000028c popSongs
+/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc1E3djh.s:255    .text:0000028c $a
+/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc1E3djh.s:415    .text:000004d0 $d
+                            *COM*:00000004 nowPlaying
+/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc1E3djh.s:464    .text:00000518 $a
+/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc1E3djh.s:649    .text:000007b4 $d
+                            *COM*:00000004 outputVol
+                            *COM*:00000001 command
+                            *COM*:00000004 paused
+/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc1E3djh.s:692    .text:000007f0 $a
+/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc1E3djh.s:831    .text:000009ec $d
+/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc1E3djh.s:851    .text:00000a20 $a
+
+UNDEFINED SYMBOLS
+cpuSetupHardware
+watchdogDelayUs
+uart0Init
+rprintf_devopen
+didSystemCrash
+printCrashInfo
+clearCrashInfo
+cpuPrintMemoryInfo
+xQueueCreateMutex
+xQueueCreate
+xTaskGenericCreate
+rprintf
+vTaskStartScheduler
+uart0PutCharPolling
+uart0PutChar
+i2cWriteDeviceRegister
+vTaskDelay
+strcpy
+initialize_SSPSPI
+initialize_I2C0
+diskio_initializeSPIMutex
+initialize_SdCardSignals
+initialize_sta013
+initialize_pcm1774
+f_mount
+memcpy
+f_opendir
+f_readdir
+strtok
+xQueueGenericSend
+i2cReadDeviceRegister
+pcm1774_OutputVolume
+sta013ResumeDecoder
+sta013PauseDecoder
+xQueueGenericReceive
+strcat
+f_open
+f_read
+rxTxByteSSPSPI
+f_close
+disk_timerproc
