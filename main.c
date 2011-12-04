@@ -22,8 +22,6 @@
 #include "string.h"
 #include <stdbool.h>
 
-#include "QIK_2S9V1.h"
-
 
 
 //GLOBALS
