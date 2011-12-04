@@ -122,16 +122,16 @@
  130              		.ident	"GCC: (GNU) 4.3.2"
 DEFINED SYMBOLS
                             *ABS*:00000000 rtc.c
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/ccegqG5V.s:6      .text:00000000 initialize_RTC
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/ccegqG5V.s:10     .text:00000000 $a
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/ccegqG5V.s:21     .text:00000020 $d
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/ccegqG5V.s:27     .text:00000028 rtc_gettime
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/ccegqG5V.s:30     .text:00000028 $a
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/ccegqG5V.s:65     .text:000000a4 $d
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/ccegqG5V.s:70     .text:000000a8 rtc_settime
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/ccegqG5V.s:74     .text:000000a8 $a
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/ccegqG5V.s:101    .text:00000108 $d
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/ccegqG5V.s:106    .text:0000010c get_fattime
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/ccegqG5V.s:109    .text:0000010c $a
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccybbwM2.s:6      .text:00000000 initialize_RTC
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccybbwM2.s:10     .text:00000000 $a
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccybbwM2.s:21     .text:00000020 $d
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccybbwM2.s:27     .text:00000028 rtc_gettime
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccybbwM2.s:30     .text:00000028 $a
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccybbwM2.s:65     .text:000000a4 $d
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccybbwM2.s:70     .text:000000a8 rtc_settime
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccybbwM2.s:74     .text:000000a8 $a
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccybbwM2.s:101    .text:00000108 $d
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccybbwM2.s:106    .text:0000010c get_fattime
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccybbwM2.s:109    .text:0000010c $a
 
 NO UNDEFINED SYMBOLS

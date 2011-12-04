@@ -24,6 +24,9 @@ fat \
 fat/option \
 drivers/uart \
 drivers \
+drivers/motor \
+drivers/lcd \
+drivers/QTR8RC \
 System \
 General \
 FreeRTOS \

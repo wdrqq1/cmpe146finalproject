@@ -133,13 +133,13 @@
  119              		.ident	"GCC: (GNU) 4.3.2"
 DEFINED SYMBOLS
                             *ABS*:00000000 cpu.c
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/ccTQSK7T.s:6      .text:00000000 cpuSetupHardware
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/ccTQSK7T.s:10     .text:00000000 $a
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/ccTQSK7T.s:50     .text:00000090 $d
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/ccTQSK7T.s:58     .text:000000a0 cpuSetupFIQISR
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/ccTQSK7T.s:62     .text:000000a0 $a
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/ccTQSK7T.s:81     .text:000000a4 cpuPrintMemoryInfo
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/ccTQSK7T.s:111    .text:00000104 $d
+/cygdrive/c/Users/Preet/AppData/Local/Temp/ccxhGT5Z.s:6      .text:00000000 cpuSetupHardware
+/cygdrive/c/Users/Preet/AppData/Local/Temp/ccxhGT5Z.s:10     .text:00000000 $a
+/cygdrive/c/Users/Preet/AppData/Local/Temp/ccxhGT5Z.s:50     .text:00000090 $d
+/cygdrive/c/Users/Preet/AppData/Local/Temp/ccxhGT5Z.s:58     .text:000000a0 cpuSetupFIQISR
+/cygdrive/c/Users/Preet/AppData/Local/Temp/ccxhGT5Z.s:62     .text:000000a0 $a
+/cygdrive/c/Users/Preet/AppData/Local/Temp/ccxhGT5Z.s:81     .text:000000a4 cpuPrintMemoryInfo
+/cygdrive/c/Users/Preet/AppData/Local/Temp/ccxhGT5Z.s:111    .text:00000104 $d
 
 UNDEFINED SYMBOLS
 rprintf

@@ -12,16 +12,11 @@
 typedef struct
 {
 	struct {
-		xQueueHandle songname;
-		xQueueHandle command;
 	}queue;
 
 	struct {
 		xTaskHandle userInterface;
 		xTaskHandle diskTimer;
-		xTaskHandle mp3;
-		xTaskHandle popSongs;
-		xTaskHandle i2cTimer;
 	}task;
 
 	struct {

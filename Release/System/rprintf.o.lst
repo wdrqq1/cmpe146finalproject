@@ -208,15 +208,15 @@
  214              		.ident	"GCC: (GNU) 4.3.2"
 DEFINED SYMBOLS
                             *ABS*:00000000 rprintf.c
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc6cm4sb.s:6      .text:00000000 rprintf_devopen
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc6cm4sb.s:10     .text:00000000 $a
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc6cm4sb.s:16     .text:0000000c $d
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc6cm4sb.s:212    .bss:00000000 putcharfunc
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc6cm4sb.s:20     .text:00000010 rprintf_putCharSource
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc6cm4sb.s:23     .text:00000010 $a
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc6cm4sb.s:41     .text:00000048 $d
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc6cm4sb.s:49     .text:00000050 rprintf
-/cygdrive/c/DOCUME~1/ADMINI~1/LOCALS~1/Temp/cc6cm4sb.s:52     .text:00000050 $a
+/cygdrive/c/Users/Preet/AppData/Local/Temp/ccSg6IVe.s:6      .text:00000000 rprintf_devopen
+/cygdrive/c/Users/Preet/AppData/Local/Temp/ccSg6IVe.s:10     .text:00000000 $a
+/cygdrive/c/Users/Preet/AppData/Local/Temp/ccSg6IVe.s:16     .text:0000000c $d
+/cygdrive/c/Users/Preet/AppData/Local/Temp/ccSg6IVe.s:212    .bss:00000000 putcharfunc
+/cygdrive/c/Users/Preet/AppData/Local/Temp/ccSg6IVe.s:20     .text:00000010 rprintf_putCharSource
+/cygdrive/c/Users/Preet/AppData/Local/Temp/ccSg6IVe.s:23     .text:00000010 $a
+/cygdrive/c/Users/Preet/AppData/Local/Temp/ccSg6IVe.s:41     .text:00000048 $d
+/cygdrive/c/Users/Preet/AppData/Local/Temp/ccSg6IVe.s:49     .text:00000050 rprintf
+/cygdrive/c/Users/Preet/AppData/Local/Temp/ccSg6IVe.s:52     .text:00000050 $a
                              .bss:00000000 $d
 
 UNDEFINED SYMBOLS
