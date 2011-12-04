@@ -14,9 +14,8 @@
 #include "../drivers/sta013.h"		// STA013 Mp3 Decoder
 #include "../drivers/pcm1774.h"		// PCM 1774 DAC
 
-
+// TODO: 5a.  Include I2C And SPI Driver Include Files
 #include "../drivers/ssp_spi.h"
-#include "../drivers/i2c.h"
 
 void printLine()
 {
@@ -34,8 +33,11 @@ void uartUI(void *pvParameters)
 		while(1);
 	}
 
+	// TODO: 5b. (Done) Initialize SPI
 	initialize_SSPSPI();
-	initialize_I2C0(100*1000);
+
+	// TODO: 5c.  Initialize I2C
+    // i2c_Initialize() ???
 
 	diskio_initializeSPIMutex(&(osHandles->lock.SPI));
 	initialize_SdCardSignals();
@@ -61,24 +63,6 @@ void uartUI(void *pvParameters)
 		if (MATCH(command, "echo")){
 			char *echoBack = strtok(NULL, "");
 			rprintf("Echo: %s\n", echoBack);
-		}
-		else if (MATCH(command, "play") || MATCH(command, "PLAY"))
-		{
-			char itemOnQ[15];
-			char *songname = strtok(NULL, ".");
-			strcpy(itemOnQ, songname);
-			//strcpy(currentSong ,itemOnQ);
-			strcat(itemOnQ, ".mp3");
-			rprintf("%s", itemOnQ);
-			rprintf("    %s(): Sending song-name to Queue ...\n", __FUNCTION__);
-			if(xQueueSend(osHandles->queue.songname, &itemOnQ, 100))
-			{
-				rprintf("    Song Sent: %s!\n", itemOnQ);
-			}
-			else
-			{
-				rprintf("Timeout during Send!!!\n");
-			}
 		}
 		else if(MATCH("ls", command))
 		{
