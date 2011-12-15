@@ -4249,29 +4249,29 @@
  4281              		.ident	"GCC: (GNU) 4.3.2"
 DEFINED SYMBOLS
                             *ABS*:00000000 sta013.c
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:6      .text:00000000 sta013ReadReg
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:10     .text:00000000 $a
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:16     .text:00000008 sta013WriteReg
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:25     .text:0000000c sta013HWReset
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:61     .text:00000078 $d
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:67     .text:00000080 sta013DownloadUpdate
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:71     .text:00000080 $a
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:84     .text:000000a4 $d
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:264    .rodata:00000030 STA013_UpdateData
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:89     .text:000000a8 initialize_sta013
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:92     .text:000000a8 $a
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:123    .text:00000118 $d
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:129    .text:00000120 sta013StartDecoder
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:133    .text:00000120 $a
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:138    .text:00000124 sta013StopDecoder
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:147    .text:00000128 sta013PauseDecoder
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:156    .text:0000012c sta013ResumeDecoder
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:165    .text:00000130 sta013GetMP3Info
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:179    .text:00000148 sta013GetAverageBitrate
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:189    .text:00000150 sta013SetVolume
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:198    .text:00000154 sta013SetTone
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:208    .rodata:00000000 MP3_Bitrates
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:209    .rodata:00000000 $d
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccTuil7Z.s:244    .rodata:00000020 MP3_SamplingFrequencies
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:6      .text:00000000 sta013ReadReg
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:10     .text:00000000 $a
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:16     .text:00000008 sta013WriteReg
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:25     .text:0000000c sta013HWReset
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:61     .text:00000078 $d
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:67     .text:00000080 sta013DownloadUpdate
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:71     .text:00000080 $a
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:84     .text:000000a4 $d
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:264    .rodata:00000030 STA013_UpdateData
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:89     .text:000000a8 initialize_sta013
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:92     .text:000000a8 $a
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:123    .text:00000118 $d
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:129    .text:00000120 sta013StartDecoder
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:133    .text:00000120 $a
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:138    .text:00000124 sta013StopDecoder
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:147    .text:00000128 sta013PauseDecoder
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:156    .text:0000012c sta013ResumeDecoder
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:165    .text:00000130 sta013GetMP3Info
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:179    .text:00000148 sta013GetAverageBitrate
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:189    .text:00000150 sta013SetVolume
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:198    .text:00000154 sta013SetTone
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:208    .rodata:00000000 MP3_Bitrates
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:209    .rodata:00000000 $d
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccOD0AWI.s:244    .rodata:00000020 MP3_SamplingFrequencies
 
 NO UNDEFINED SYMBOLS

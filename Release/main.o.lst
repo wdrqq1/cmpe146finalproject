@@ -121,11 +121,11 @@
  108              		.ident	"GCC: (GNU) 4.3.2"
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccu69e8K.s:18     .text:00000000 main
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccu69e8K.s:21     .text:00000000 $a
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccu69e8K.s:84     .text:000000e4 $d
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccu69e8K.s:98     .text:0000010c diskTimer
-/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccu69e8K.s:101    .text:0000010c $a
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccnzcz3z.s:18     .text:00000000 main
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccnzcz3z.s:21     .text:00000000 $a
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccnzcz3z.s:84     .text:000000e4 $d
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccnzcz3z.s:98     .text:0000010c diskTimer
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/ccnzcz3z.s:101    .text:0000010c $a
 
 UNDEFINED SYMBOLS
 cpuSetupHardware
