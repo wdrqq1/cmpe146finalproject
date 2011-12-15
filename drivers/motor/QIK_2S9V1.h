@@ -10,7 +10,7 @@
 
 #include "../mbed/mbed.h"
 
-using namespace mbed;
+//using namespace mbed;
 
 struct MetalGearMotor
 {
@@ -18,6 +18,9 @@ struct MetalGearMotor
 
 	mbed:Serial _serial;
 };
+
+#define PinName integer;
+
 
 
 void MetalGearMotor(PinName tx, PinName rx);

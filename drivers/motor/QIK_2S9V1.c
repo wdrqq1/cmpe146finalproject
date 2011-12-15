@@ -37,6 +37,7 @@ void MetalGearMotor::reverse(char speed)
 void MetalGearMotor::forward(char speed)
 {
 	_serial.putc(RM_forward);
+	uart
 	_serial.putc(speed);
 	_serial.putc(LM_forward);
 	if(speed == 0x30)
