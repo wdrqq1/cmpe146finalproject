@@ -1,0 +1,147 @@
+   1              		.file	"main.c"
+   2              		.section	.rodata.str1.1,"aMS",%progbits,1
+   3              	.LC0:
+   4 0000 55617274 		.ascii	"Uart UI\000"
+   4      20554900 
+   5              	.LC1:
+   6 0008 4474696D 		.ascii	"Dtimer\000"
+   6      657200
+   7              	.LC2:
+   8 000f 4552524F 		.ascii	"ERROR:  OUT OF MEMORY: Check OS Stack Size or task "
+   8      523A2020 
+   8      4F555420 
+   8      4F46204D 
+   8      454D4F52 
+   9 0042 73746163 		.ascii	"stack size.\012\000"
+   9      6B207369 
+   9      7A652E0A 
+   9      00
+  10              	.LC3:
+  11 004f 0A2D2D20 		.ascii	"\012-- Starting FreeRTOS --\012\000"
+  11      53746172 
+  11      74696E67 
+  11      20467265 
+  11      6552544F 
+  12              	.LC4:
+  13 0069 4552524F 		.ascii	"ERROR: Unexpected OS Exit!\012\000"
+  13      523A2055 
+  13      6E657870 
+  13      65637465 
+  13      64204F53 
+  14              		.text
+  15              		.align	2
+  16              		.global	main
+  18              	main:
+  19              		@ args = 0, pretend = 0, frame = 12
+  20              		@ frame_needed = 0, uses_anonymous_args = 0
+  21 0000 30402DE9 		stmfd	sp!, {r4, r5, lr}
+  22 0004 1CD04DE2 		sub	sp, sp, #28
+  23 0008 FEFFFFEB 		bl	cpuSetupHardware
+  24 000c D0009FE5 		ldr	r0, .L6
+  25 0010 FEFFFFEB 		bl	watchdogDelayUs
+  26 0014 011CA0E3 		mov	r1, #256
+  27 0018 960CA0E3 		mov	r0, #38400
+  28 001c FEFFFFEB 		bl	uart0Init
+  29 0020 C0009FE5 		ldr	r0, .L6+4
+  30 0024 FEFFFFEB 		bl	rprintf_devopen
+  31 0028 FEFFFFEB 		bl	didSystemCrash
+  32 002c 000050E3 		cmp	r0, #0
+  33 0030 0100000A 		beq	.L2
+  34 0034 FEFFFFEB 		bl	printCrashInfo
+  35 0038 FEFFFFEB 		bl	clearCrashInfo
+  36              	.L2:
+  37 003c FEFFFFEB 		bl	cpuPrintMemoryInfo
+  38 0040 A4009FE5 		ldr	r0, .L6+8
+  39 0044 FEFFFFEB 		bl	rprintf_devopen
+  40 0048 FEFFFFEB 		bl	xQueueCreateMutex
+  41 004c 10408DE2 		add	r4, sp, #16
+  42 0050 18008DE5 		str	r0, [sp, #24]
+  43 0054 0050A0E3 		mov	r5, #0
+  44 0058 01C0A0E3 		mov	ip, #1
+  45 005c 8C009FE5 		ldr	r0, .L6+12
+  46 0060 8C109FE5 		ldr	r1, .L6+16
+  47 0064 062CA0E3 		mov	r2, #1536
+  48 0068 0430A0E1 		mov	r3, r4
+  49 006c 00C08DE5 		str	ip, [sp, #0]
+  50 0070 30008DE9 		stmib	sp, {r4, r5}	@ phole stm
+  51 0074 0C508DE5 		str	r5, [sp, #12]
+  52 0078 FEFFFFEB 		bl	xTaskGenericCreate
+  53 007c 010050E3 		cmp	r0, #1
+  54 0080 0B00001A 		bne	.L3
+  55 0084 04E084E2 		add	lr, r4, #4
+  56 0088 04C0A0E3 		mov	ip, #4
+  57 008c 0430A0E1 		mov	r3, r4
+  58 0090 60009FE5 		ldr	r0, .L6+20
+  59 0094 60109FE5 		ldr	r1, .L6+24
+  60 0098 4020A0E3 		mov	r2, #64
+  61 009c 00508DE8 		stmia	sp, {ip, lr}	@ phole stm
+  62 00a0 0C508DE5 		str	r5, [sp, #12]
+  63 00a4 08508DE5 		str	r5, [sp, #8]
+  64 00a8 FEFFFFEB 		bl	xTaskGenericCreate
+  65 00ac 010050E3 		cmp	r0, #1
+  66 00b0 0100000A 		beq	.L4
+  67              	.L3:
+  68 00b4 44009FE5 		ldr	r0, .L6+28
+  69 00b8 FEFFFFEB 		bl	rprintf
+  70              	.L4:
+  71 00bc 40009FE5 		ldr	r0, .L6+32
+  72 00c0 FEFFFFEB 		bl	rprintf
+  73 00c4 FEFFFFEB 		bl	vTaskStartScheduler
+  74 00c8 18009FE5 		ldr	r0, .L6+4
+  75 00cc FEFFFFEB 		bl	rprintf_devopen
+  76 00d0 30009FE5 		ldr	r0, .L6+36
+  77 00d4 FEFFFFEB 		bl	rprintf
+  78 00d8 0000A0E3 		mov	r0, #0
+  79 00dc 1CD08DE2 		add	sp, sp, #28
+  80 00e0 3080BDE8 		ldmfd	sp!, {r4, r5, pc}
+  81              	.L7:
+  82              		.align	2
+  83              	.L6:
+  84 00e4 80841E00 		.word	2000000
+  85 00e8 00000000 		.word	uart0PutCharPolling
+  86 00ec 00000000 		.word	uart0PutChar
+  87 00f0 00000000 		.word	uartUI
+  88 00f4 00000000 		.word	.LC0
+  89 00f8 00000000 		.word	diskTimer
+  90 00fc 08000000 		.word	.LC1
+  91 0100 0F000000 		.word	.LC2
+  92 0104 4F000000 		.word	.LC3
+  93 0108 69000000 		.word	.LC4
+  95              		.align	2
+  96              		.global	diskTimer
+  98              	diskTimer:
+  99              		@ args = 0, pretend = 0, frame = 0
+ 100              		@ frame_needed = 0, uses_anonymous_args = 0
+ 101 010c 04E02DE5 		str	lr, [sp, #-4]!
+ 102              	.L9:
+ 103 0110 0A00A0E3 		mov	r0, #10
+ 104 0114 FEFFFFEB 		bl	vTaskDelay
+ 105 0118 FEFFFFEB 		bl	disk_timerproc
+ 106 011c FBFFFFEA 		b	.L9
+ 108              		.ident	"GCC: (GNU) 4.3.2"
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/cc1RWdS5.s:18     .text:00000000 main
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/cc1RWdS5.s:21     .text:00000000 $a
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/cc1RWdS5.s:84     .text:000000e4 $d
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/cc1RWdS5.s:98     .text:0000010c diskTimer
+/cygdrive/c/Users/tony_sid/AppData/Local/Temp/cc1RWdS5.s:101    .text:0000010c $a
+
+UNDEFINED SYMBOLS
+cpuSetupHardware
+watchdogDelayUs
+uart0Init
+rprintf_devopen
+didSystemCrash
+printCrashInfo
+clearCrashInfo
+cpuPrintMemoryInfo
+xQueueCreateMutex
+xTaskGenericCreate
+rprintf
+vTaskStartScheduler
+uart0PutCharPolling
+uart0PutChar
+uartUI
+vTaskDelay
+disk_timerproc
